@@ -1,12 +1,15 @@
 import React, {useContext} from 'react';
 import {Box, Button, Container, Grid} from "@mui/material";
 import {Context} from "../index";
+import firebase from "firebase/compat/app";
 
 const Login = () => {
     const {auth} = useContext(Context)
 
-    const login = () => {
-
+    const login = async () => {
+        const provider = new firebase.auth.GoogleAuthProvider()
+        const {user} = await auth.signInWithPopup(provider)
+        console.log(user)
     }
 
     return (
@@ -22,7 +25,12 @@ const Login = () => {
                       direction={"column"}
                 >
                     <Box p={5}>
-                        <Button variant={"outlined"}>Login with Google</Button>
+                        <Button
+                            onClick={login}
+                            variant={"outlined"}
+                        >
+                            Login with Google
+                        </Button>
                     </Box>
                 </Grid>
             </Grid>
